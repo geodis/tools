@@ -82,8 +82,8 @@ then
 
     # FIX
     tmux select-pane -t 1
-    tmux send-keys "$connect_ldap"  C-m
-    sleep $time_out
+    # tmux send-keys "$connect_ldap"  C-m
+    # sleep $time_out
     tmux send-keys "logout"  C-m
     # /FIX
     
