@@ -12,9 +12,9 @@
 # +---------------------+-----------------------+
 
 connect_ldap="ssh root@ldap-server"
-connect_mail=$connect_mail
-connect_proxy=$connect_proxy
-time_out=1
+connect_mail="ssh root@mail"
+connect_proxy="ssh root@proxy"
+time_out=2
 
 tmux has-session 
 if [ $? == 0 ]
@@ -43,28 +43,26 @@ then
     # | ldap-server     |
     # +-------------------+
     tmux select-pane -t 0
-    tmux send-keys $connect_ldap  C-m
+    tmux send-keys "$connect_ldap"  C-m
     sleep $time_out
     tmux send-keys "glances"  C-m
-    # tmux select-pane -t 1
-    # tmux send-keys $connect_ldap  C-m
 
     # +-------------+
     # |     mail    |
     # +-------------+
     # 
     tmux select-pane -t 2
-    tmux send-keys $connect_mail  C-m
+    tmux send-keys "$connect_mail"  C-m
     sleep $time_out
     tmux send-keys "glances"  C-m
     
     tmux select-pane -t 3
-    tmux send-keys $connect_mail  C-m
+    tmux send-keys "$connect_mail"  C-m
     sleep $time_out
     tmux send-keys 'watch -n100 "ls /var/lib/mailman/data/held*"'  C-m
 
     tmux select-pane -t 4
-    tmux send-keys $connect_mail  C-m
+    tmux send-keys "$connect_mail"  C-m
     sleep $time_out
     tmux send-keys "mail_queue_watch.sh"  C-m
 
@@ -73,18 +71,18 @@ then
     # +-------------+
     # 
     tmux select-pane -t 5
-    tmux send-keys $connect_proxy  C-m
+    tmux send-keys "$connect_proxy"  C-m
     sleep $time_out
     tmux send-keys 'glances'  C-m
 
     tmux select-pane -t 6
-    tmux send-keys $connect_proxy  C-m
+    tmux send-keys "$connect_proxy"  C-m
     sleep $time_out
     tmux send-keys 'nload'  C-m
 
     # FIX
     tmux select-pane -t 1
-    tmux send-keys $connect_ldap  C-m
+    tmux send-keys "$connect_ldap"  C-m
     sleep $time_out
     tmux send-keys "logout"  C-m
     # /FIX
